@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Engineering Portfolio</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --bg-soft: #111a2b;
+      --panel: rgba(255,255,255,0.06);
+      --panel-strong: rgba(255,255,255,0.1);
+      --text: #e8edf7;
+      --muted: #a9b6cc;
+      --line: rgba(255,255,255,0.12);
+      --accent: #58a6ff;
+      --accent-2: #5eead4;
+      --shadow: 0 20px 60px rgba(0,0,0,0.28);
+      --radius: 22px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, Segoe UI, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(88,166,255,0.18), transparent 35%),
+        radial-gradient(circle at top right, rgba(94,234,212,0.14), transparent 28%),
+        linear-gradient(180deg, #08101d 0%, #0b1220 52%, #0d1422 100%);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: radial-gradient(circle at center, black 50%, transparent 90%);
+      pointer-events: none;
+      opacity: 0.45;
+      z-index: 0;
+    }
+
+    .blob, .blob2 {
+      position: fixed;
+      border-radius: 999px;
+      filter: blur(70px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.45;
+      animation: floatBlob 12s ease-in-out infinite alternate;
+    }
+
+    .blob {
+      width: 280px; height: 280px;
+      background: rgba(88,166,255,0.16);
+      top: 8%; left: -60px;
+    }
+
+    .blob2 {
+      width: 340px; height: 340px;
+      background: rgba(94,234,212,0.14);
+      right: -80px; top: 45%;
+      animation-duration: 15s;
+    }
+
+    @keyframes floatBlob {
+      from { transform: translateY(0) translateX(0) scale(1); }
+      to { transform: translateY(24px) translateX(18px) scale(1.08); }
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(9, 14, 24, 0.64);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 74px;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #08101d;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      box-shadow: 0 10px 30px rgba(88,166,255,0.28);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      padding: 10px 14px;
+      border-radius: 999px;
+      transition: 0.25s ease;
+      font-size: 0.96rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 20px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease, border-color 0.22s ease;
+      cursor: pointer;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #08101d;
+      box-shadow: 0 10px 30px rgba(88,166,255,0.18);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      border-color: rgba(255,255,255,0.1);
+    }
+
+    .hero {
+      position: relative;
+      z-index: 1;
+      padding: 72px 0 28px;
+    }
+
+    .hero-wrap {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 34px;
+      align-items: stretch;
+    }
+
+    .hero-copy,
+    .hero-card,
+    .section-card,
+    .timeline-item,
+    .project-card,
+    .cert-card,
+    .contact-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.045));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+    }
+
+    .hero-copy {
+      padding: 34px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      color: var(--accent-2);
+      border: 1px solid rgba(255,255,255,0.09);
+      font-size: 0.9rem;
+      margin-bottom: 18px;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 4.8rem);
+      line-height: 0.97;
+      margin-bottom: 18px;
+      letter-spacing: -0.05em;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #ffffff 15%, var(--accent) 52%, var(--accent-2) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 1.06rem;
+      line-height: 1.8;
+      max-width: 760px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 26px;
+      margin-bottom: 28px;
+    }
+
+    .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.5rem;
+      margin-bottom: 6px;
+    }
+
+    .stat span { color: var(--muted); font-size: 0.95rem; }
+
+    .hero-card {
+      padding: 28px;
+      display: grid;
+      align-content: start;
+      gap: 16px;
+    }
+
+    .profile-shell {
+      padding: 22px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .profile-top {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .avatar {
+      width: 84px;
+      height: 84px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(88,166,255,0.25), rgba(94,234,212,0.22));
+      display: grid;
+      place-items: center;
+      font-size: 1.7rem;
+      font-weight: 900;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .profile-meta h3 { margin-bottom: 6px; }
+    .profile-meta p { margin: 0; color: var(--muted); }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .tag {
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 24px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .section-head p { color: var(--muted); max-width: 760px; margin-bottom: 0; }
+
+    .skills-grid,
+    .projects-grid,
+    .cert-grid,
+    .contact-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .skills-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .projects-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cert-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .contact-grid { grid-template-columns: 1.1fr 0.9fr; }
+
+    .section-card {
+      padding: 24px;
+      min-height: 100%;
+    }
+
+    .section-card h3 { margin-bottom: 10px; }
+    .section-card p { color: var(--muted); line-height: 1.7; }
+
+    .list-clean {
+      list-style: none;
+      padding: 0;
+      margin: 14px 0 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .list-clean li {
+      display: flex;
+      gap: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      margin-top: 9px;
+      flex: 0 0 auto;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 18px;
+    }
+
+    .timeline-item {
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .timeline-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .timeline-role { font-size: 1.1rem; font-weight: 700; }
+    .timeline-date {
+      color: var(--accent-2);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+    }
+
+    .timeline-item p { color: var(--muted); }
+
+    .project-card {
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(88,166,255,0.35);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.34);
+    }
+
+    .project-type {
+      display: inline-block;
+      font-size: 0.85rem;
+      color: var(--accent-2);
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 16px;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .tiny-link {
+      color: var(--text);
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.92rem;
+    }
+
+    .tiny-link:hover { background: rgba(255,255,255,0.08); }
+
+    .cert-card, .contact-card {
+      padding: 22px;
+    }
+
+    .cert-card p, .contact-card p { color: var(--muted); }
+
+    .contact-form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      border-radius: 16px;
+      padding: 14px 15px;
+      font: inherit;
+      outline: none;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: rgba(88,166,255,0.5);
+      background: rgba(255,255,255,0.08);
+    }
+
+    footer {
+      padding: 30px 0 50px;
+      color: var(--muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .accent-line {
+      width: 72px;
+      height: 5px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      margin: 12px 0 18px;
+    }
+
+    @media (max-width: 1050px) {
+      .hero-wrap,
+      .contact-grid,
+      .skills-grid,
+      .projects-grid,
+      .cert-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero-wrap {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav {
+        flex-direction: column;
+        justify-content: center;
+        padding: 14px 0;
+      }
+
+      .nav-links {
+        justify-content: center;
+      }
+
+      .skills-grid,
+      .projects-grid,
+      .cert-grid,
+      .contact-grid,
+      .quick-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 40px;
+      }
+
+      .hero-copy,
+      .hero-card,
+      .section-card,
+      .timeline-item,
+      .project-card,
+      .cert-card,
+      .contact-card {
+        padding: 20px;
+      }
+
+      h1 { line-height: 1.02; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="blob"></div>
+  <div class="blob2"></div>
+
+  <header>
+    <div class="container nav">
+      <a href="#top" class="brand">
+        <div class="brand-mark">EM</div>
+        <div>
+          <div>E M</div>
+          <div style="font-size:0.85rem;color:var(--muted);font-weight:500;">Engineering Portfolio</div>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#credentials">Credentials</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-wrap">
+        <div class="hero-copy reveal visible">
+          <div class="eyebrow">Engineering • Software • Systems • Design</div>
+          <h1>
+            Building <span class="gradient-text">practical engineering solutions</span><br>
+            across software, hardware, and infrastructure.
+          </h1>
+          <p class="lead">
+            I design and build reliable systems that bridge software, databases, automation, mechanical processes,
+            electrical workflows, and technical operations. This portfolio is structured to showcase real project work,
+            certifications, licenses, and a cross-disciplinary engineering skill set.
+          </p>
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">View Projects</a>
+            <a href="#contact" class="btn btn-secondary">Contact Me</a>
+            <a href="#credentials" class="btn btn-secondary">Certificates & Licenses</a>
+          </div>
+
+          <div class="quick-stats">
+            <div class="stat">
+              <strong>5+</strong>
+              <span>Engineering disciplines represented</span>
+            </div>
+            <div class="stat">
+              <strong>10+</strong>
+              <span>Portfolio projects and technical case studies</span>
+            </div>
+            <div class="stat">
+              <strong>1</strong>
+              <span>Unified portfolio for resume and recruiting</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-card reveal visible">
+          <div class="profile-shell">
+            <div class="profile-top">
+              <div class="avatar">EM</div>
+              <div class="profile-meta">
+                <h3>Your Name</h3>
+                <p>Engineering Professional</p>
+                <p>Software • Database • Mechanical • Electrical • Network</p>
+              </div>
+            </div>
+            <p style="color:var(--muted);line-height:1.8;margin-bottom:0;">
+              Replace this area with your short professional summary, city/state, years of experience,
+              and the type of engineering roles you want to pursue.
+            </p>
+            <div class="tag-row">
+              <span class="tag">Portfolio Ready</span>
+              <span class="tag">Resume Friendly</span>
+              <span class="tag">Animated UI</span>
+              <span class="tag">Single File</span>
+            </div>
+          </div>
+
+          <div class="section-card" style="padding:20px; min-height:auto;">
+            <h3 style="margin-bottom:10px;">Suggested sections</h3>
+            <ul class="list-clean">
+              <li><span class="dot"></span><span>About / resume summary</span></li>
+              <li><span class="dot"></span><span>Technical skills by engineering domain</span></li>
+              <li><span class="dot"></span><span>Project case studies with outcomes</span></li>
+              <li><span class="dot"></span><span>Certificates, licenses, and education</span></li>
+              <li><span class="dot"></span><span>Contact information and downloadable resume</span></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <h2>About</h2>
+            <div class="accent-line"></div>
+            <p>
+              A strong engineering portfolio website should feel polished, modern, and easy to scan. The best layouts use
+              clear content hierarchy, subtle motion, strong spacing, and focused sections that help hiring managers find
+              what matters quickly.
+            </p>
+          </div>
+        </div>
+
+        <div class="skills-grid">
+          <article class="section-card reveal">
+            <h3>Professional Summary</h3>
+            <p>
+              Write a 4–6 sentence summary here describing your engineering background, industries you have worked in,
+              and the kinds of systems you build or support.
+            </p>
+          </article>
+
+          <article class="section-card reveal">
+            <h3>Core Focus</h3>
+            <p>
+              Highlight your best strengths such as industrial automation, software development, technical documentation,
+              system design, troubleshooting, testing, or process improvement.
+            </p>
+          </article>
+
+          <article class="section-card reveal">
+            <h3>Resume Highlights</h3>
+            <p>
+              Add a few measurable achievements like uptime gains, reduced scrap, throughput improvements, successful
+              deployments, reduced downtime, or cost savings.
+            </p>
+          </article>
+
+          <article class="section-card reveal">
+            <h3>Career Direction</h3>
+            <p>
+              Use this card to state the roles you are targeting: controls engineer, systems engineer, software engineer,
+              manufacturing engineer, reliability engineer, or technical project engineer.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <h2>Engineering Disciplines</h2>
+            <div class="accent-line"></div>
+            <p>
+              Grouping your skills by discipline makes the portfolio look more credible and easier for recruiters to scan.
+            </p>
+          </div>
+        </div>
+
+        <div class="skills-grid">
+          <article class="section-card reveal">
+            <h3>Software Engineering</h3>
+            <ul class="list-clean">
+              <li><span class="dot"></span><span>HTML, CSS, JavaScript, responsive UI design</span></li>
+              <li><span class="dot"></span><span>Web apps, dashboards, data interfaces</span></li>
+              <li><span class="dot"></span><span>Frontend and backend integration</span></li>
+            </ul>
+          </article>
+
+          <article class="section-card reveal">
+            <h3>Database Engineering</h3>
+            <ul class="list-clean">
+              <li><span class="dot"></span><span>SQL, relational design, stored procedures</span></li>
+              <li><span class="dot"></span><span>Reporting pipelines and data transformation</span></li>
+              <li><span class="dot"></span><span>Operational analytics and production tracking</span></li>
+            </ul>
+          </article>
+
+          <article class="section-card reveal">
+            <h3>Mechanical Engineering</h3>
+            <ul class="list-clean">
+              <li><span class="dot"></span><span>Mechanical systems, fixtures, process improvement</span></li>
+              <li><span class="dot"></span><span>Failure analysis and root cause investigation</span></li>
+              <li><span class="dot"></span><span>Hands-on troubleshooting and validation</span></li>
+            </ul>
+          </article>
+
+          <article class="section-card reveal">
+            <h3>Electrical & Network Engineering</h3>
+            <ul class="list-clean">
+              <li><span class="dot"></span><span>Wiring, control logic, test setups, diagnostics</span></li>
+              <li><span class="dot"></span><span>Device communication and systems connectivity</span></li>
+              <li><span class="dot"></span><span>Networked equipment, infrastructure, reliability</span></li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <h2>Experience Timeline</h2>
+            <div class="accent-line"></div>
+            <p>
+              Use this section like a visual resume. Keep it outcome-focused and professional.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline">
+          <article class="timeline-item reveal">
+            <div class="timeline-top">
+              <div>
+                <div class="timeline-role">Engineering / Technical Role</div>
+                <div style="color:var(--muted); margin-top:6px;">Company Name • City, State</div>
+              </div>
+              <div class="timeline-date">2024 – Present</div>
+            </div>
+            <p>
+              Describe your responsibilities, systems supported, and measurable results. Mention cross-functional work,
+              problem solving, equipment reliability, software tools, and process improvements.
+            </p>
+          </article>
+
+          <article class="timeline-item reveal">
+            <div class="timeline-top">
+              <div>
+                <div class="timeline-role">Previous Technical Position</div>
+                <div style="color:var(--muted); margin-top:6px;">Company Name • City, State</div>
+              </div>
+              <div class="timeline-date">2021 – 2024</div>
+            </div>
+            <p>
+              Add 2–4 impact statements here, such as improving uptime, reducing waste, automating data collection,
+              designing test workflows, or supporting production and maintenance systems.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <h2>Featured Projects</h2>
+            <div class="accent-line"></div>
+            <p>
+              The strongest portfolios show engineering range. Keep each project short, visual, and results-oriented.
+            </p>
+          </div>
+        </div>
+
+        <div class="projects-grid">
+          <article class="project-card reveal">
+            <span class="project-type">Software Engineering</span>
+            <h3>Engineering Dashboard Platform</h3>
+            <p>
+              A web-based dashboard for machine status, production visibility, and operational tracking with responsive UI,
+              color-coded state display, and live metrics.
+            </p>
+            <div class="tag-row">
+              <span class="tag">HTML/CSS/JS</span>
+              <span class="tag">UI/UX</span>
+              <span class="tag">Operational Data</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="tiny-link">Case Study</a>
+              <a href="#" class="tiny-link">Source</a>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <span class="project-type">Database Engineering</span>
+            <h3>Production Reporting Database</h3>
+            <p>
+              A structured data solution for tracking outputs, downtime, scrap, and project history across multiple work
+              areas with queryable reporting and export workflows.
+            </p>
+            <div class="tag-row">
+              <span class="tag">SQL</span>
+              <span class="tag">Reporting</span>
+              <span class="tag">Data Modeling</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="tiny-link">Case Study</a>
+              <a href="#" class="tiny-link">Schema</a>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <span class="project-type">Mechanical Engineering</span>
+            <h3>Process Improvement Initiative</h3>
+            <p>
+              A mechanical/process engineering effort focused on reducing inefficiencies, improving workflow clarity,
+              and supporting repeatable, operator-friendly processes.
+            </p>
+            <div class="tag-row">
+              <span class="tag">Process</span>
+              <span class="tag">Reliability</span>
+              <span class="tag">Optimization</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="tiny-link">Case Study</a>
+              <a href="#" class="tiny-link">Results</a>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <span class="project-type">Electrical Engineering</span>
+            <h3>Bench Test / Diagnostic Setup</h3>
+            <p>
+              An electrical test and validation setup for powering, interfacing, and safely diagnosing technical hardware
+              systems in a controlled environment.
+            </p>
+            <div class="tag-row">
+              <span class="tag">Diagnostics</span>
+              <span class="tag">Wiring</span>
+              <span class="tag">Validation</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="tiny-link">Overview</a>
+              <a href="#" class="tiny-link">Diagram</a>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <span class="project-type">Network Engineering</span>
+            <h3>Connected Systems Infrastructure</h3>
+            <p>
+              A project that links devices, data, and interfaces across a local network for better monitoring,
+              accessibility, and engineering visibility.
+            </p>
+            <div class="tag-row">
+              <span class="tag">Networking</span>
+              <span class="tag">Integration</span>
+              <span class="tag">Reliability</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="tiny-link">Overview</a>
+              <a href="#" class="tiny-link">Architecture</a>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <span class="project-type">Cross-Disciplinary</span>
+            <h3>End-to-End Engineering Solution</h3>
+            <p>
+              A combined project involving software, data, hardware, and technical process design to show full-stack
+              engineering capability and practical systems thinking.
+            </p>
+            <div class="tag-row">
+              <span class="tag">Full System</span>
+              <span class="tag">Documentation</span>
+              <span class="tag">Execution</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="tiny-link">Case Study</a>
+              <a href="#" class="tiny-link">Outcomes</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="credentials">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <h2>Certificates, Licenses & Education</h2>
+            <div class="accent-line"></div>
+            <p>
+              This section is ideal for certificates, training, licenses, degrees, and ongoing professional development.
+            </p>
+          </div>
+        </div>
+
+        <div class="cert-grid">
+          <article class="cert-card reveal">
+            <h3>Certificate</h3>
+            <p>Add certificate title, issuing organization, and completion date here.</p>
+          </article>
+          <article class="cert-card reveal">
+            <h3>License</h3>
+            <p>Add license name, license number if appropriate, and active status here.</p>
+          </article>
+          <article class="cert-card reveal">
+            <h3>Education / Training</h3>
+            <p>Add degree, technical training, apprenticeship, or continuing education here.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <h2>Contact</h2>
+            <div class="accent-line"></div>
+            <p>
+              Keep this simple: email, LinkedIn, GitHub, location, and a resume download link.
+            </p>
+          </div>
+        </div>
+
+        <div class="contact-grid">
+          <article class="contact-card reveal">
+            <h3>Contact Information</h3>
+            <ul class="list-clean">
+              <li><span class="dot"></span><span>Email: yourname@email.com</span></li>
+              <li><span class="dot"></span><span>LinkedIn: linkedin.com/in/yourname</span></li>
+              <li><span class="dot"></span><span>GitHub / Portfolio repository link</span></li>
+              <li><span class="dot"></span><span>Location: City, State</span></li>
+            </ul>
+            <div class="hero-actions" style="margin-bottom:0;">
+              <a href="#" class="btn btn-primary">Download Resume</a>
+              <a href="#top" class="btn btn-secondary">Back to Top</a>
+            </div>
+          </article>
+
+          <article class="contact-card reveal">
+            <h3>Quick Message Form</h3>
+            <form class="contact-form" onsubmit="event.preventDefault(); alert('Connect this form to Formspree, Netlify Forms, or your own backend.');">
+              <div class="field">
+                <label>Name</label>
+                <input type="text" placeholder="Your name" />
+              </div>
+              <div class="field">
+                <label>Email</label>
+                <input type="email" placeholder="your@email.com" />
+              </div>
+              <div class="field">
+                <label>Message</label>
+                <textarea rows="5" placeholder="Tell me about the role, project, or opportunity..."></textarea>
+              </div>
+              <button class="btn btn-primary" type="submit">Send Message</button>
+            </form>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © 2026 E M • Engineering Portfolio • Built as a polished single-file HTML template.
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
